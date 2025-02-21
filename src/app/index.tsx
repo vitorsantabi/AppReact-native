@@ -75,13 +75,13 @@ export default function App() {
         }).start();
       } else {
         Animated.timing(headerHeight, {
-          toValue: 100,
+          toValue: 70,
           duration: 30,
           useNativeDriver: false,
         }).start();
 
         Animated.timing(iconSize, {
-          toValue: 85,
+          toValue: 70,
           duration: 40,
           useNativeDriver: false,
         }).start();
@@ -114,7 +114,7 @@ export default function App() {
       />
       <Animated.View
         style={[
-          styles.Wellcome,
+          styles.header,
           {
             height: headerHeight,
           },
@@ -123,17 +123,17 @@ export default function App() {
         <Animated.Image
           source={require("@/assets/background/favicon.png")}
           style={[
-            styles.ImgWellcome,
+            styles.headerIcon,
             {
               width: iconSize,
               height: iconSize,
             },
           ]}
         />
-        <View style={styles.WellcomeText}>
+        <View style={styles.headerTextContainer}>
           <Animated.Text
             style={[
-              styles.WellcomeText1,
+              styles.headerText,
               {
                 fontSize: scrollY.interpolate({
                   inputRange: [0, 50],
@@ -150,7 +150,7 @@ export default function App() {
         </View>
       </Animated.View>
       <ScrollView
-        style={{ width: "100%", paddingBottom: 150, marginBottom: 30 }}
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
@@ -163,27 +163,16 @@ export default function App() {
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            height: 300,
-            padding: 0,
-            paddingRight: 30,
-            margin: 10,
-            shadowColor: "#fff",
-            shadowOffset: { width: 5, height: 2 },
-            shadowOpacity: 0.5,
-            shadowRadius: 10,
-            elevation: 5,
-            gap: 10,
-          }}
+          contentContainerStyle={styles.newsScrollContainer}
         >
-          <View style={styles.mewsContainer}>
+          <View style={styles.newsContainer}>
             <News
               imageUrl={require("@/assets/Eras/6/albumMc.png")}
               title={"News Title 1"}
               subtitle={"Subtitle 1"}
             />
-            <Link href={"/(news)/news1"} style={styles.mewsContainerLink}>
-              <Text style={styles.mewsContainerLinktxt}>Ver mais ...</Text>
+            <Link href={"/(news)/news1"} style={styles.newsLink}>
+              <Text style={styles.newsLinkText}>Ver mais ...</Text>
             </Link>
           </View>
         </ScrollView>
@@ -229,7 +218,7 @@ export default function App() {
             link: "",
           },
         ].map((album, index) => (
-          <View key={index} style={styles.Albuns}>
+          <View key={index} style={styles.albumContainer}>
             <Cards
               imageSource={album.imageSource}
               title={album.title}
@@ -261,10 +250,72 @@ const styles = StyleSheet.create({
     opacity: 1.5,
     objectFit: "cover",
   },
-  buttonText: {
+  header: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 50,
+    flexDirection: "row",
+    position: "relative",
+    zIndex: 10000,
+    backgroundColor: "rgba(255, 255, 255, 0.0)",
+  },
+  headerIcon: {
+    width: 150,
+    height: 150,
+    borderRadius: 100,
+    opacity: 0.8,
+  },
+  headerTextContainer: {
+    flexDirection: "column",
+  },
+  headerText: {
     color: "#fff",
-    fontSize: 16,
-    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+    fontFamily: "Poppins_700Bold",
+  },
+  scrollView: {
+    width: "100%",
+    paddingBottom: 150,
+    marginBottom: 30,
+    borderRadius: 20,
+    marginTop: 10,
+  },
+  newsScrollContainer: {
+    height: 300,
+    padding: 0,
+    paddingRight: 30,
+    margin: 10,
+    shadowColor: "#fff",
+    shadowOffset: { width: 5, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 5,
+    gap: 10,
+  },
+  newsContainer: {
+    width: 380,
+    padding: 10,
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 2, 0.5)",
+    borderRadius: 30,
+    alignItems: "center",
+  },
+  newsLink: {
+    marginTop: 10,
+  },
+  newsLinkText: {
+    backgroundColor: "#fff",
+    padding: 10,
+    width: 100,
+    height: 50,
+  },
+  albumContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    padding: 1,
+    marginTop: 5,
   },
   button: {
     backgroundColor: "rgba(53, 53, 53, 0.4)",
@@ -280,52 +331,14 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
   },
-  Albuns: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    padding: 1,
-    marginTop: 5,
-  },
-  ImgWellcome: {
-    width: 150,
-    height: 150,
-    borderRadius: 100,
-    opacity: 0.8,
-  },
-  Wellcome: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 50,
-    flexDirection: "row",
-  },
-  WellcomeText: {
-    flexDirection: "column",
-  },
-  WellcomeText1: {
+  buttonText: {
     color: "#fff",
-    fontSize: 15,
-    fontFamily: "Poppins_700Bold",
+    fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  mewsContainer: {
-    width: 380,
-    padding: 10,
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 2, 0.5)",
-    borderRadius: 30,
-
-    alignItems: "center",
-  },
-  mewsContainerLinktxt: {
-    backgroundColor: "#fff",
-    padding: 10,
-    width: 100,
-    height: 50,
   },
 });

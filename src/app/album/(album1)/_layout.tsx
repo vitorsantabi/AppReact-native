@@ -1,33 +1,25 @@
-import React from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import { FaHome, FaInfo, FaContact } from 'react-icons/fa';
-
-const Layout = () => {
-    return (
-        <div>
-            <Tabs>
-                <TabList>
-                    <Tab><FaHome /> Home</Tab>
-                    <Tab><FaInfo /> About</Tab>
-                    <Tab><FaContact /> Contact</Tab>
-                </TabList>
-
-                <TabPanel>
-                    <h2>Home Content</h2>
-                    <p>Welcome to the home page!</p>
-                </TabPanel>
-                <TabPanel>
-                    <h2>About Content</h2>
-                    <p>Learn more about us on this page.</p>
-                </TabPanel>
-                <TabPanel>
-                    <h2>Contact Content</h2>
-                    <p>Get in touch with us here.</p>
-                </TabPanel>
-            </Tabs>
-        </div>
-    );
+import React from "react";
+import { View } from "react-native";
+import { blue, grey } from "../../styles";
+import { AntDesign } from "@expo/vector-icons";
+type Props = {
+  iconName: string;
+  isCurrent?: boolean;
 };
-
-export default Layout;
+export const BottomMenuItem = ({ iconName, isCurrent }: Props) => {
+  return (
+    <View
+      style={{
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <AntDesign
+        name={iconName}
+        size={32}
+        style={{ color: isCurrent ? blue : grey }}
+      />
+    </View>
+  );
+};
