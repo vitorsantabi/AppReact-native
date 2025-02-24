@@ -171,9 +171,37 @@ export default function App() {
               title={"News Title 1"}
               subtitle={"Subtitle 1"}
             />
-            <Link href={"/(news)/news1"} style={styles.newsLink}>
+            
+            <Link href={""} style={styles.newsLink}>
               <Text style={styles.newsLinkText}>Ver mais ...</Text>
             </Link>
+            
+          </View>
+
+          <View style={styles.newsContainer}>
+            <News
+              imageUrl={require("@/assets/Eras/6/albumMc.png")}
+              title={"News Title 1"}
+              subtitle={"Subtitle 1"}
+            />
+            
+            <Link href={""} style={styles.newsLink}>
+              <Text style={styles.newsLinkText}>Ver mais ...</Text>
+            </Link>
+            
+          </View>
+
+          <View style={styles.newsContainer}>
+            <News
+              imageUrl={require("@/assets/Eras/6/albumMc.png")}
+              title={"News Title 1"}
+              subtitle={"Subtitle 1"}
+            />
+            
+            <Link href={""} style={styles.newsLink}>
+              <Text style={styles.newsLinkText}>Ver mais ...</Text>
+            </Link>
+            
           </View>
         </ScrollView>
         <BarInfo

@@ -1,11 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 
 const Singles = () => {
   return (
-    <View style={styles.container}>
+    <ImageBackground
+        source={require("@/assets/Eras/1/bgf.webp")}
+        style={styles.container} 
+        >
       <Text style={styles.text}>Singles</Text>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -19,7 +22,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#333",
+    color: "#ffff",
   },
 });
 
