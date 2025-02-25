@@ -42,16 +42,17 @@ const BarInfo: React.FC<BarInfoProps> = ({
 
 const styles = StyleSheet.create({
   toolbar: {
-    height: 60,
+    height: 50,
     width: "100%",
     marginRight:10,
     marginLeft:10,
     
   },
   blurContainer: {
-    width: "100%",
+    width: "95%",
     padding: 10,
     margin: 10,
+    alignSelf: "center",
     textAlign: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
     position: "absolute",
-    bottom: 0,
+    top: 30,
   },
 });
 

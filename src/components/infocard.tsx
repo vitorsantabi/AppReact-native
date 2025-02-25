@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: 380,
+    width: "100%",
     objectFit: "cover",
     borderRadius: 10,
     marginBottom: 10,

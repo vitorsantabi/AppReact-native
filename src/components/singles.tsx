@@ -35,18 +35,19 @@ const SingleCard: React.FC<InfoCardProps> = ({ title, imageSource }) => {
 
 const styles = StyleSheet.create({
   containe: {
-    width: 200,
-    height: 250,
+    width: "99%",
+    height: "70%",
     backgroundColor: "#000",
     padding: 10,
     alignItems: "center",
     borderRadius: 30,
     gap: 10,
+    alignSelf: "center",
   },
   cover: {
     backgroundColor: "#222",
-    width: "95%",
-    height: 180,
+    width: "80%",
+    height: 350,
     borderRadius: 30,
   },
   Titulo: {
