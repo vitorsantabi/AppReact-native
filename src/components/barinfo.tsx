@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
     fontFamily: "Poppins_700Bold",
+    position: "absolute",
+    bottom: 10,
   },
   toolbarText1: {
     fontSize: 15,
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
     position: "absolute",
-    top: 30,
+    top: 25,
   },
 });
 
