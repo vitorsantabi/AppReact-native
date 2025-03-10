@@ -1,103 +1,208 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import GestureFlipView from 'react-native-gesture-flip-card';
-import {
-  useFonts,
-  Poppins_400Regular,
-  Poppins_700Bold,
-  Poppins_300Light,
-  Poppins_600SemiBold,
-  Poppins_200ExtraLight,
-} from "@expo-google-fonts/poppins";
+import { useFonts, Poppins_400Regular, Poppins_700Bold } from "@expo-google-fonts/poppins";
+import { Audio } from "expo-av";
+import Slider from "@react-native-community/slider";
+import { MaterialIcons } from "@expo/vector-icons"; // Para ícones de play/pause
 
-interface InfoCardProps {
-  title: string; // Título do cabeçalho
-  imageSource: any; // Fonte da imagem
-  description: string; // Texto descritivo
-}
+type InfoCardProps = {
+  title: string;
+  imageSource: any;
+  description: string;
+  audioSource: any; // Pode ser um require(local) ou uma URL (remoto)
+};
 
-const SingleCard: React.FC<InfoCardProps> = ({ title, imageSource, description }) => {
+const SingleCard: React.FC<InfoCardProps> = ({ title, imageSource, description, audioSource }) => {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
-    Poppins_300Light,
-    Poppins_600SemiBold,
-    Poppins_200ExtraLight,
   });
 
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [position, setPosition] = useState(0); // Posição atual do áudio em milissegundos
+  const [duration, setDuration] = useState(0); // Duração total do áudio em milissegundos
+
+  // Carrega o áudio quando o componente é montado
+  useEffect(() => {
+    const loadAudio = async () => {
+      const { sound } = await Audio.Sound.createAsync(audioSource, {}, onPlaybackStatusUpdate);
+      setSound(sound);
+    };
+
+    loadAudio();
+
+    return () => {
+      if (sound) {
+        sound.unloadAsync(); // Descarrega o áudio quando o componente é desmontado
+      }
+    };
+  }, [audioSource]);
+
+  // Atualiza o estado de reprodução e a posição do áudio
+  const onPlaybackStatusUpdate = (status: any) => {
+    if (status.isLoaded) {
+      setPosition(status.positionMillis);
+      setDuration(status.durationMillis || 0);
+      setIsPlaying(status.isPlaying);
+    }
+  };
+
+  // Função para tocar ou pausar o áudio
+  const playPauseAudio = async () => {
+    if (sound) {
+      if (isPlaying) {
+        await sound.pauseAsync();
+      } else {
+        await sound.playAsync();
+      }
+    }
+  };
+
+  // Função para buscar uma posição específica no áudio
+  const seekAudio = async (value: number) => {
+    if (sound) {
+      await sound.setPositionAsync(value);
+    }
+  };
+
+  // Converte milissegundos para o formato mm:ss
+  const formatTime = (millis: number) => {
+    const totalSeconds = Math.floor(millis / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
   if (!fontsLoaded) {
-    return null; // Ou um componente de carregamento
+    return <Text>Carregando fontes...</Text>;
   }
 
-  const renderFront = () => {
-    return (
-      <View style={styles.frontStyle}>
-        <Image style={styles.cover} source={imageSource} />
-        <Text style={styles.title}>{title}</Text>
-      </View>
-    );
-  };
-
-  const renderBack = () => {
-    return (
-      <View style={styles.backStyle}>
-        <Text style={styles.description}>{description}</Text>
-      </View>
-    );
-  };
-
   return (
-    <View style={styles.container}>
-      <GestureFlipView width={370} height={500} renderFront={renderFront} renderBack={renderBack} />
+    <View style={styles.card}>
+      <View style={styles.content}>
+        <Image source={imageSource} style={styles.image} />
+        <View style={styles.textContent}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.description}>{description}</Text>
+        </View>
+
+      </View>
+
+
+      <View style={styles.Player}>
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={duration}
+          value={position}
+          onSlidingComplete={seekAudio}
+          minimumTrackTintColor="#fff" // Cor da parte preenchida
+          maximumTrackTintColor="#aaa" // Cor da parte não preenchida
+          thumbTintColor="#4682B4" // Cor do "ponteiro"
+        />
+
+        {/* Minutagem (tempo atual / tempo total) */}
+        <View style={styles.timeContainer}>
+          <Text style={styles.timeText}>{formatTime(position)}</Text>
+          <Text style={styles.timeText}>{formatTime(duration)}</Text>
+        </View>
+
+        {/* Botão de play/pause */}
+        <TouchableOpacity onPress={playPauseAudio} style={styles.playButton}>
+          <MaterialIcons
+            name={isPlaying ? "pause" : "play-arrow"}
+            size={40}
+            color="#fff"
+          />
+        </TouchableOpacity>
+      </View>
     </View>
+
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "rgba(2,2,2,0.5)",
+  card: {
+    backgroundColor: "rgba(255,255,255,0.8)",
+    padding: 0,
+    borderRadius: 10,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
     width: "100%",
-    flex:1,
-    padding: 25,
-    borderRadius: 40,
-    alignItems: 'center',
+   alignSelf: "center",
   },
-  frontStyle: {
-    backgroundColor: "rgba(2,2,2,0.5)",
-    width: 370,
-    height: 500,
-    padding: 38,
-    borderRadius: 50,
-    justifyContent: "center",
+  content: {
+    flexDirection: "row",
+    width:"90%",
+    padding:0,
+    marginTop:10,
+
+  },
+  textContent: {
+    flexDirection: "column",
     alignItems: "center",
-  },
-  backStyle: {
-    backgroundColor: "rgba(2,2,2,0.5)",
-    width: 370,
-    height: 500,
-    padding: 38,
-    borderRadius: 50,
     justifyContent: "center",
-    alignItems: "center",
+    width: "60%",
+    height: 220,
+    marginRight:15,
+    marginBottom:10,
+    padding:10,
+    backgroundColor:"#fff",
+    borderRadius:30,
+    
   },
-  cover: {
-    borderRadius: 20,
-    width: "90%",
-    height: 300,
-    marginBottom: 20,
+  Player:{
+    backgroundColor:"rgba(0, 0, 0, 1.0)",
+    width:"80%",
+    height:80,
+    alignItems:"center",
+    justifyContent:"center",
+    padding:10,
+    borderRadius:100,
+    marginBottom:10,
+  },
+  image: {
+    width: 150,
+    height: 220,
+    borderRadius: 10,
+    marginRight:15,
   },
   title: {
-    color: "#fff",
-    fontFamily: "Poppins_200ExtraLight",
-    fontSize: 20,
-    textAlign: "center",
+    fontSize: 18,
+    fontFamily: "Poppins_700Bold",
+    marginBottom: 5,
   },
   description: {
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+    
+  },
+  slider: {
+    width: "80%",
+    position:"relative",
+    top:15,
+  },
+  timeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "70%",
+    
+  },
+  timeText: {
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
     color: "#fff",
-    fontFamily: "Poppins_300Light",
-    fontSize: 16,
-    textAlign: "center",
-    paddingHorizontal: 20,
+    position:"relative",
+    top:12,
+  },
+  playButton: {
+    position:"relative",
+    bottom:5,
   },
 });
 
