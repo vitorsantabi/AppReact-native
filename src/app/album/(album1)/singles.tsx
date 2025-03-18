@@ -3,6 +3,7 @@ import SingleCard from "@/components/singles";
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground, ScrollView, Dimensions } from "react-native";
 const Hollywood = require('@/assets/Eras/1/Hollywood.mp3');
+const ImnotRobot = require('@/assets/Eras/1/imnotrobot.mp3');
 const Singles = () => {
   return (
     <ImageBackground
@@ -14,7 +15,7 @@ const Singles = () => {
       </View>
       <ScrollView
       
-        contentContainerStyle={{ gap: 10, }}
+        contentContainerStyle={{ gap: 10, paddingBottom:130,}}
         showsHorizontalScrollIndicator={false}
         pagingEnabled
       >
@@ -28,7 +29,9 @@ const Singles = () => {
         <SingleCard
           title={"I Am Not a Robot"}
           imageSource={require("@/assets/Eras/1/root.png")}
-          description={"Uma música sobre vulnerabilidade e humanidade, 'I Am Not a Robot' explora a ideia de que é normal sentir emoções e que não precisamos nos esconder atrás de uma fachada de perfeição."} audioSource={undefined}        />
+          description={"Uma música sobre vulnerabilidade e humanidade, 'I Am Not a Robot' explora a ideia de que é normal sentir emoções e que não precisamos nos esconder atrás de uma fachada de perfeição."} 
+          audioSource={ImnotRobot}     
+             />
       
   
         <SingleCard

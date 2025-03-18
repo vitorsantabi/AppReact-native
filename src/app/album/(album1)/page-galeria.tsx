@@ -15,7 +15,7 @@ export const data = [
 export default function PageGaleria() {
   return (
     <View style={{ flex: 1 , backgroundColor: '#000' }}>
-      <View style={{ marginTop: 20 }}>
+      <View style={{ marginTop: "10%" }}>
     <BarInfo backgroundColor={''} title={'Galeria'} subtitle={'Confira as imagens do album'} />
     </View>
     <Gallery

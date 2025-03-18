@@ -125,7 +125,7 @@ const SingleCard: React.FC<InfoCardProps> = ({ title, imageSource, description, 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "rgba(255,255,255,0.8)",
-    padding: 0,
+    padding: 10,
     borderRadius: 10,
     alignItems: "center",
     shadowColor: "#000",
@@ -138,17 +138,18 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: "row",
-    width:"90%",
+    width:"100%",
     padding:0,
     marginTop:10,
-
+    justifyContent:"center",
+    alignItems:"center",
   },
   textContent: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     width: "60%",
-    height: 220,
+    height: "auto",
     marginRight:15,
     marginBottom:10,
     padding:10,
@@ -164,21 +165,21 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     padding:10,
     borderRadius:100,
-    marginBottom:10,
+    marginTop:10,
   },
   image: {
     width: 150,
-    height: 220,
+    height: 150,
     borderRadius: 10,
     marginRight:15,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: "Poppins_700Bold",
     marginBottom: 5,
   },
   description: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: "Poppins_400Regular",
     
   },
