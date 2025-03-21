@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
 import { useFonts, Poppins_400Regular, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import { Audio } from "expo-av";
 import Slider from "@react-native-community/slider";
 import { MaterialIcons } from "@expo/vector-icons"; // Para ícones de play/pause
+
+const { width, height } = Dimensions.get("window");
 
 type InfoCardProps = {
   title: string;
@@ -79,16 +81,14 @@ const SingleCard: React.FC<InfoCardProps> = ({ title, imageSource, description, 
   }
 
   return (
-    <View style={styles.card}>
-      <View style={styles.content}>
+    <View style={[styles.card, { width: width * 0.98 }]}>
+      
         <Image source={imageSource} style={styles.image} />
         <View style={styles.textContent}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>{description}</Text>
-        </View>
-
+       
       </View>
-
 
       <View style={styles.Player}>
         <Slider
@@ -118,92 +118,70 @@ const SingleCard: React.FC<InfoCardProps> = ({ title, imageSource, description, 
         </TouchableOpacity>
       </View>
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "rgba(255,255,255,0.8)",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
+  card:{
+    backgroundColor: "#fff",
+    borderRadius: 30,
+    marginVertical: 5,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-    width: "100%",
-   alignSelf: "center",
-  },
-  content: {
-    flexDirection: "row",
-    width:"100%",
-    padding:0,
-    marginTop:10,
-    justifyContent:"center",
-    alignItems:"center",
-  },
-  textContent: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "60%",
-    height: "auto",
-    marginRight:15,
-    marginBottom:10,
-    padding:10,
-    backgroundColor:"#fff",
-    borderRadius:30,
-    
-  },
-  Player:{
-    backgroundColor:"rgba(0, 0, 0, 1.0)",
-    width:"80%",
-    height:80,
-    alignItems:"center",
-    justifyContent:"center",
-    padding:10,
-    borderRadius:100,
-    marginTop:10,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   image: {
-    width: 150,
+    width: "100%",
     height: 150,
-    borderRadius: 10,
-    marginRight:15,
+    objectFit: "cover",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  textContent: {
+    padding: 10,
+    width: "100%",
   },
   title: {
-    fontSize: 20,
     fontFamily: "Poppins_700Bold",
-    marginBottom: 5,
+    fontSize: 22,
+    color: "#333",
   },
   description: {
-    fontSize: 14,
     fontFamily: "Poppins_400Regular",
+    fontSize: 14,
+    color: "#666",
+  },
+  Player: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    width: "80%",
+   
     
   },
   slider: {
-    width: "80%",
-    position:"relative",
-    top:15,
+    width: "100%",
+    height: 40,
   },
   timeContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "70%",
-    
+    width: "90%",
   },
   timeText: {
-    fontSize: 12,
-    fontFamily: "Poppins_400Regular",
-    color: "#fff",
-    position:"relative",
-    top:12,
+    color: "#000",
   },
   playButton: {
-    position:"relative",
-    bottom:5,
+    backgroundColor: "#4682B4",
+    padding: 10,
+    borderRadius: 50,
+   position: "relative",
+    bottom: 10,
   },
 });
 

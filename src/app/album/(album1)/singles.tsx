@@ -11,11 +11,11 @@ const Singles = () => {
       style={styles.container}
     >
       <View style={styles.bar}>
-        <BarInfo backgroundColor={""} title={"Galeria"} subtitle={"Confira as imagens do album"} />
+        <BarInfo backgroundColor={""} title={"Singles"} subtitle={"Confira os Singles do album"} />
       </View>
       <ScrollView
       
-        contentContainerStyle={{ gap: 10, paddingBottom:130,}}
+        contentContainerStyle={{ gap: 10, paddingBottom:130, }}
         showsHorizontalScrollIndicator={false}
         pagingEnabled
       >

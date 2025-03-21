@@ -22,7 +22,7 @@ import { Link } from "expo-router";
 import BarInfo from "@/components/barinfo";
 import News from "@/components/news";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -167,41 +167,38 @@ export default function App() {
         >
           <View style={styles.newsContainer}>
             <News
-              imageUrl={require("@/assets/Eras/6/albumMc.png")}
-              title={"News Title 1"}
-              subtitle={"Subtitle 1"}
+              imageUrl={require("@/assets/news/cover1.jpg")}
+              title={"BUTTERFLY"}
+              subtitle={"MARINA lança single, 'BUTTERFLY'."}
             />
-            
-            <Link href={""} style={styles.newsLink}>
-              <Text style={styles.newsLinkText}>Ver mais ...</Text>
+
+            <Link href={"/newsone"} style={styles.newsLink}>
+              <Text style={styles.newsLinkText}>Confira aqui ...</Text>
             </Link>
-            
           </View>
 
           <View style={styles.newsContainer}>
             <News
-              imageUrl={require("@/assets/Eras/6/albumMc.png")}
-              title={"News Title 1"}
-              subtitle={"Subtitle 1"}
+              imageUrl={require("@/assets/news/cupidgirl.webp")}
+              title={"CUPID'S GIRL"}
+              subtitle={"MARINA lançou o seu novo single, 'CUPID'S GIRL'."}
             />
-            
-            <Link href={""} style={styles.newsLink}>
+
+            <Link href={"/newstwo"} style={styles.newsLink}>
               <Text style={styles.newsLinkText}>Ver mais ...</Text>
             </Link>
-            
           </View>
 
           <View style={styles.newsContainer}>
             <News
-              imageUrl={require("@/assets/Eras/6/albumMc.png")}
+              imageUrl={require("@/assets/news/cupidgirl.webp")}
               title={"News Title 1"}
               subtitle={"Subtitle 1"}
             />
-            
-            <Link href={""} style={styles.newsLink}>
+
+            <Link href={"/newstwo"} style={styles.newsLink}>
               <Text style={styles.newsLinkText}>Ver mais ...</Text>
             </Link>
-            
           </View>
         </ScrollView>
         <BarInfo
@@ -223,7 +220,7 @@ export default function App() {
             title: "Electra Heart",
             description:
               "Lançado em 2012 - Hits: Primadonna, Bubblegum Bitch, Teen Idle",
-            link: "",
+            link: "/",
           },
           {
             imageSource: require("@/assets/albuns/album3.jpeg"),
@@ -253,7 +250,7 @@ export default function App() {
               description={album.description}
             />
             <TouchableOpacity style={styles.button}>
-              <Link href={album.link}>
+              <Link href={album.link as "/"}>
                 <Text style={styles.buttonText}>Ver mais</Text>
               </Link>
             </TouchableOpacity>
@@ -288,9 +285,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.0)",
   },
   headerIcon: {
-    width: 150,
-    height: 150,
-    borderRadius: 100,
+    width: width * 0.4, // 40% da largura do dispositivo
+    height: width * 0.4, // 40% da largura do dispositivo
+    borderRadius: (width * 0.4) / 2, // Metade da largura para manter a proporção circular
     opacity: 0.8,
   },
   headerTextContainer: {
@@ -321,21 +318,28 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   newsContainer: {
-    width: 380,
+    width: width * 0.99, // 90% da largura do dispositivo
     padding: 10,
-    flex: 1,
+    margin: 1,
+    marginRight:25,
     backgroundColor: "rgba(0, 0, 2, 0.5)",
-    borderRadius: 30,
+    borderRadius: 50,
     alignItems: "center",
   },
   newsLink: {
-    marginTop: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    textAlign: "center",
+    textAlignVertical: "center",
+    
+    borderRadius: 20,
+    width: width * 0.35, // 25% da largura do dispositivo
+    height: height * 0.06, // 5% da altura do dispositivo
+    
   },
   newsLinkText: {
-    backgroundColor: "#fff",
-    padding: 10,
-    width: 100,
-    height: 50,
+    color: "#fff",
+    fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
   albumContainer: {
     flexDirection: "row",
@@ -347,8 +351,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "rgba(53, 53, 53, 0.4)",
-    width: 100,
-    height: 100,
+    width: width * 0.25, // 25% da largura do dispositivo
+    height: 100, // 10% da altura do dispositivo
     borderBottomEndRadius: 20,
     borderTopEndRadius: 20,
     justifyContent: "center",
